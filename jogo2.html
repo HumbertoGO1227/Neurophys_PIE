@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VR Game with A-Frame</title>
+    <!-- A-Frame Library -->
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <link rel="stylesheet" href="jogo2.css" />
+  </head>
+  <body>
+     <a href="index.html"> 
+    <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back to Menu" class="back-button" />
+  </a>
+
+
+<!--         <a-plane position="0 0 -5" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane> -->
+<!--       <a-camera 
+      position="-0 -35 0"></a-camera> -->
+    
+    
+    <a-scene>
+      <a-plane position="0 0 -5" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
+      <a-camera position="0.4 1.9 0"></a-camera>
+      
+    <a-entity position="0 -100 1" camera look-controls wasd-controls></a-entity>
+<!--       <a-gltf-model
+        src="#home"
+        position="25 0.5 -5"
+        rotation="0 -0.5 0"
+        scale="10 10 10" 
+      ></a-gltf-model> -->
+      
+<!--       DICA
+      X: Controla a largura (horizontalmente),
+      Y: Controla a altura (verticalmente),
+      Z: Controla a profundidade (horizontalmente, mas na direção da câmera ou ao longo do eixo Z). -->
+      
+      <a-gltf-model
+        src="#table"
+        position="-0.2 -2 -5" 
+         rotation="0 -450 0"
+        scale="-5.5 5 5.5"
+              
+      ></a-gltf-model>
+<!--       
+      <a-gltf-model
+        src="#regador"
+        position="2 -8 -5" 
+         rotation="0 -450 0"
+        scale="-5.5 5 5.5"
+      ></a-gltf-model> -->
+      
+      
+      <a-gltf-model 
+      src="#jardim" 
+      position="25 25 -5" 
+      rotation="-2 0 0" 
+      scale="-1 1 1">
+      </a-gltf-model>
+      
+<!--       <a-gltf-model 
+      src="#watering" 
+      position="-0.2 -3 -5" 
+      rotation="45  0" 
+      scale="-0.04 -0.04 -0.04"></a-gltf-model> -->
+      
+<!--       <a-gltf-model
+        src="#garden"
+        position="50 50 50"
+        rotation="-2 0 0"
+        scale="100 100 100"
+      ></a-gltf-model> -->
+      
+      <!-- GLTF model links -->
+      <a-assets>
+<!--         <a-asset-item
+          id="home"
+          src="https://cdn.glitch.global/1f707c33-d9a1-414e-9322-17020961c59c/homeg.gltf?v=1726172664998"
+        ></a-asset-item> -->
+
+  <!-- Adicione a textura do céu -->
+
+  <!-- Adicione a textura do céu -->
+  <img id="skyTexture" src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/Nuvens-1.jpg?v=1730749162710" />
+        
+                <a-asset-item 
+        id="jardim"
+        src="https://cdn.glitch.me/1f707c33-d9a1-414e-9322-17020961c59c/free_low_poly_forest.glb?v=1730159260751"
+        ></a-asset-item>
+        
+         <a-asset-item
+          id="table"
+          src="https://cdn.glitch.global/1f707c33-d9a1-414e-9322-17020961c59c/tableg.gltf?v=1726235162250"
+        ></a-asset-item>
+        
+<!--         <a-asset-item
+        id="regador"
+        src="https://cdn.glitch.global/1f707c33-d9a1-414e-9322-17020961c59c/watering_can.glb?v=1729554713035"
+        ></a-asset-item> -->
+</a-assets>
+
+<a-sky src="#skyTexture"></a-sky>
+
+
+
+
+    </a-scene>
+  </body>
+</html>

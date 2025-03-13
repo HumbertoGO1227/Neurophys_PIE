@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VR Game with A-Frame - Menu</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+
+<div class="menu-screen active" id="menu-screen">
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/logo.png?v=1728042700387" alt="Logo" />
+  <div class="button btn-3" id="play-button">Jogar</div>
+  <div class="button btn-3" id="instructions-button">Instruções</div>
+  <div class="button btn-3" id="options-button">Opções</div>
+  <div class="button btn-3" id="score-button">Pontuação</div>
+</div>
+
+<!-- Tela com o Vídeo -->
+<div class="instructions-screen" id="instructions-screen" style="display: none;">
+  <video controls width="100%" height="auto">
+    <source src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/VID_20241118_205748.mp4?v=1731984184625" type="video/mp4">
+    Seu navegador não suporta o elemento de vídeo.
+  </video>
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back" id="back-button-instructions" style="width: 40px; cursor: pointer; position: absolute; top: 20px; left: 20px;">
+</div>
+
+<div class="login-screen" id="login-screen">
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/logo.png?v=1728042700387" alt="Logo" />
+  <div class="button btn-3" id="enter-button">Entrar</div>
+  <div class="button btn-3" id="register-button">Cadastrar</div>
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back" id="back-button-login" />
+</div>
+  
+  <!-- Tela de Login -->
+<div class="cpf-login-screen" id="cpf-login-screen" style="display: none;">
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/logo.png?v=1728042700387" alt="Logo" />
+  <p>Login</p>
+  <input type="text" id="cpf-input-login" placeholder="Digite seu CPF" />
+  <div class="button btn-3" id="confirm-login-button">Confirmar</div>
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back" id="back-button-cpf-login" />
+</div>
+
+<!-- Tela de Cadastro -->
+<div class="register-screen" id="register-screen" style="display: none;">
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/logo.png?v=1728042700387" alt="Logo" />
+  <p>Cadastro</p>
+  <input type="text" id="name-input" placeholder="Digite seu nome" />
+  <input type="text" id="cpf-input-register" placeholder="Digite seu CPF" />
+  <div class="button btn-3" id="confirm-register-button">Cadastrar</div>
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back" id="back-button-register" />
+</div>
+
+
+<!-- Níveis -->
+<div class="level-screen" id="level-screen">
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/logo.png?v=1728042700387" alt="Logo" />
+  <div class="button level-button" id="level-1-button">Nível 1</div>
+  <div class="button level-button" id="level-2-button">Nível 2</div>
+  <div class="button level-button" id="level-3-button">Nível 3</div>
+  <div class="button level-button" id="level-4-button">Nível 4</div> 
+  <div class="button level-button" id="level-5-button">Nível 5</div> 
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back" id="back-button-level" />
+</div>
+
+<!-- Opções -->
+<div class="options-screen" id="options-screen">
+  <p>Ajustes do jogo</p>
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back" id="back-button-options" />
+</div>
+
+<!-- Pontuação -->
+<div class="score-screen" id="score-screen">
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/logo.png?v=1728042700387" alt="Logo" />
+  <p>Buscar por nome</p>
+  <input type="text" id="search-name" placeholder="Digite o nome" />
+  <div class="button btn-3" id="search-button">Buscar</div>
+  <p id="score-result">Pontuação: </p>
+  <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back" id="back-button-score" />
+</div>
+
+<script>
+  const playButton = document.getElementById('play-button');
+  const instructionsButton = document.getElementById('instructions-button');
+  const optionsButton = document.getElementById('options-button');
+  const scoreButton = document.getElementById('score-button');
+  const backButtonLogin = document.getElementById('back-button-login');
+  const backButtonLevel = document.getElementById('back-button-level');
+  const backButtonInstructions = document.getElementById('back-button-instructions');
+  const backButtonOptions = document.getElementById('back-button-options');
+  const backButtonScore = document.getElementById('back-button-score');
+  
+  const menuScreen = document.getElementById('menu-screen');
+  const loginScreen = document.getElementById('login-screen');
+  const levelScreen = document.getElementById('level-screen');
+  const instructionsScreen = document.getElementById('instructions-screen');
+  const optionsScreen = document.getElementById('options-screen');
+  const scoreScreen = document.getElementById('score-screen');
+
+  playButton.addEventListener('click', () => {
+    menuScreen.classList.remove('active');
+    loginScreen.classList.add('active');
+  });
+
+  instructionsButton.addEventListener('click', () => {
+    menuScreen.style.display = 'none';
+    instructionsScreen.style.display = 'block';
+  });
+
+  backButtonInstructions.addEventListener('click', () => {
+    instructionsScreen.style.display = 'none';
+    menuScreen.style.display = 'block';
+  });
+
+  optionsButton.addEventListener('click', () => {
+    menuScreen.classList.remove('active');
+    optionsScreen.classList.add('active');
+  });
+
+  scoreButton.addEventListener('click', () => {
+    menuScreen.classList.remove('active');
+    scoreScreen.classList.add('active');
+  });
+
+  backButtonLogin.addEventListener('click', () => {
+    loginScreen.classList.remove('active');
+    menuScreen.classList.add('active');
+  });
+
+  backButtonLevel.addEventListener('click', () => {
+    levelScreen.classList.remove('active');
+    loginScreen.classList.add('active');
+  });
+
+  backButtonOptions.addEventListener('click', () => {
+    optionsScreen.classList.remove('active');
+    menuScreen.classList.add('active');
+  });
+  
+  backButtonScore.addEventListener('click', () => {
+    scoreScreen.classList.remove('active');
+    menuScreen.classList.add('active');
+  });
+
+  document.getElementById('enter-button').addEventListener('click', () => {
+    loginScreen.classList.remove('active');
+    levelScreen.classList.add('active');
+  });
+
+  document.getElementById('level-1-button').addEventListener('click', () => {
+    window.location.href = 'jogo1.html'; 
+  });
+  
+    document.getElementById('level-2-button').addEventListener('click', () => {
+    window.location.href = 'jogo2.html'; 
+  });
+  
+  document.getElementById('level-3-button').addEventListener('click', () => {
+    window.location.href = 'jogo3.html'; 
+  });
+
+  document.getElementById('level-4-button').addEventListener('click', () => {
+    window.location.href = 'jogo4.html'; 
+  });
+  
+    document.getElementById('level-5-button').addEventListener('click', () => {
+    window.location.href = 'jogo5.html'; 
+  });
+
+
+  const searchButton = document.getElementById('search-button');
+  const searchName = document.getElementById('search-name');
+  const scoreResult = document.getElementById('score-result');
+
+  searchButton.addEventListener('click', () => {
+    const name = searchName.value;
+    if (name === "") {
+      scoreResult.innerHTML = "Por favor, digite um nome.";
+    } else {
+      const fakeScore = Math.floor(Math.random() * 100);
+      scoreResult.innerHTML = `Pontuação de ${name}: ${fakeScore}`;
+    }
+  });
+</script>
+
+</body>
+</html>

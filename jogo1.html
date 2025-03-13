@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="jogo4.css" />
+    <title>A-Frame Super Hands Component - 6DOF With Physics</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/super-hands/dist/super-hands.js"></script>
+    <script src="https://rawcdn.githack.com/kylebakerio/aframe-physics-system/f7117be8f83cb75ff870941883b7973ff92d0a34/dist/aframe-physics-system.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.1.1/dist/aframe-event-set-component.js"></script>
+    <script src="https://unpkg.com/aframe-physics-extras/dist/aframe-physics-extras.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component@1.3.1/dist/aframe-environment-component.js"></script>
+    <script>
+      var score = 0;
+      var cubesPicked = 0;
+      var level = 1;
+      var maxLevels = 5;
+      var startTime = new Date().getTime();
+
+      
+
+      function playSound(url) {
+        var audio = new Audio(url);
+        audio.play();
+      }
+
+      function createCube(color, x, y, z) {
+        const box = document.createElement("a-box");
+        box.setAttribute("color", color);
+        box.setAttribute("position", `${x} ${y} ${z}`);
+        box.setAttribute("scale", "0.2 0.2 0.2");
+        box.setAttribute("mixin", "cube all-interactions");
+        box.setAttribute("change-color-on-grab", "");
+        return box;
+      }
+
+      function checkCubesPicked() {
+        if (cubesPicked === 3) {
+          level += 1;
+          playSound("https://cdn.glitch.global/d6a70273-19ab-44a9-b6b6-4a8b510e6129/442943__qubodup__level-up.wav?v=1716742828278");
+          cubesPicked = 0;
+
+          if (level > maxLevels) {
+            level = 1;
+            score = 0;
+            window.location.reload();
+          } else {
+            const distanceZ = -0.8;
+            const scene = document.querySelector("a-scene");
+            const yPosition = 2;
+            const positions = [
+              { color: "blue", x: 0.18 },
+              { color: "red", x: 0 },
+              { color: "green", x: -0.18 },
+            ];
+
+            positions.forEach((pos) => {
+              const cube = createCube(pos.color, pos.x, yPosition, distanceZ);
+              scene.appendChild(cube);
+            });
+          }
+        }
+      }
+
+      AFRAME.registerComponent("my-test-component", {
+        tick: function () {
+          var el = this.el;
+          var currentTime = new Date().getTime();
+          var elapsedTime = Math.floor((currentTime - startTime) / 1000);
+          
+          el.setAttribute("text", {
+            value:
+              "Score: " +
+              score +
+              "\nLevel: " +
+              level +
+              "\nTime: " +
+              elapsedTime +
+              "s",
+          });
+        },
+      });
+
+      AFRAME.registerComponent("change-color-on-grab", {
+        init: function () {
+          var el = this.el;
+          el.addEventListener("grab-start", function () {
+            el.setAttribute("material", "color", "black");
+            el.parentNode.removeChild(el);
+            score += 1;
+            cubesPicked += 1;
+            checkCubesPicked();
+          });
+        },
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene 
+      cursor="rayOrigin: mouse"
+      id="vrScene"
+      physics
+      environment="preset: forest; shadow: false"
+    >
+      <a-assets>
+        <a-asset-item
+          id="bowl-opened-black"
+          src="https://cdn.statically.io/gh/Adam314159/vrgo/master/assets/Bowls%20and%20stones/bowl_blk_stones.gltf"
+        ></a-asset-item>
+        <img
+          id="portals-preview"
+          src="https://cdn.statically.io/gh/wmurphyrd/aframe-super-hands-component/master/examples/assets/physics.jpg"
+        />
+        <img
+          id="colortransform"
+          src="https://cdn.statically.io/gh/wmurphyrd/aframe-super-hands-component/master/examples/physics/colortransform.png"
+        />
+
+        <a-mixin
+          id="transformer"
+          color-randomizer
+          droppable
+          static-body
+          collision-filter="collisionForces: false"
+          geometry="primitive: box; width: 0.5; height: 0.5; depth: 0.5"
+        ></a-mixin>
+
+        <a-mixin
+          id="cube"
+          geometry="primitive: box; width: 0.33; height: 0.33; depth: 0.33"
+        ></a-mixin>
+
+        <a-mixin
+          id="all-interactions"
+          hoverable
+          grabbable
+          stretchable
+          draggable
+          dynamic-body
+          shadow
+        ></a-mixin>
+
+        <a-mixin
+          id="physics-hands"
+          physics-collider
+          phase-shift
+          collision-filter="collisionForces: false"
+          static-body="shape: sphere; sphereRadius: 0.02"
+          super-hands="colliderEvent: collisions; colliderEventProperty: els; colliderEndEvent: collisions; colliderEndEventProperty: clearedEls;"
+        ></a-mixin>
+
+        <a-mixin id="surface" static-body></a-mixin>
+      </a-assets>
+
+      <a-entity id="vision">
+        <a-camera
+          position="0 1.6 0"
+          look-controls
+          wasd-controls
+          cursor="rayOrigin: mouse"
+        ></a-camera>
+        <a-entity
+          id="rhand"
+          mixin="physics-hands"
+          hand-controls="hand: right"
+        ></a-entity>
+        <a-entity
+          id="lhand"
+          mixin="physics-hands"
+          hand-controls="hand: left"
+        ></a-entity>
+      </a-entity>
+
+      <a-entity
+        text="value: Score: 0\nLevel: 1\nTime: 0s; wrapCount: 20; width: 3"
+        position="1 1.8 -3"
+        my-test-component
+      ></a-entity>
+
+      <!-- Initial table and cubes -->
+      <a-entity position="0 0 0">
+        <a-box
+          static-body
+          width="1"
+          height="0.1"
+          depth="1"
+          color="#808080"
+          position="0 0.75 -1"
+        ></a-box>
+        <a-box
+          static-body
+          width="0.1"
+          height="0.7"
+          depth="0.1"
+          color="#808080"
+          position="-0.45 0.35 -0.45"
+        ></a-box>
+        <a-box
+          static-body
+          width="0.1"
+          height="0.7"
+          depth="0.1"
+          color="#808080"
+          position="0.45 0.35 -0.45"
+        ></a-box>
+        <a-box
+          static-body
+          width="0.1"
+          height="0.7"
+          depth="0.1"
+          color="#808080"
+          position="-0.45 0.35 -1.55"
+        ></a-box>
+        <a-box
+          static-body
+          width="0.1"
+          height="0.7"
+          depth="0.1"
+          color="#808080"
+          position="0.45 0.35 -1.55"
+        ></a-box>
+      </a-entity>
+
+      <!-- Initial cubes -->
+      <a-box
+        mixin="cube all-interactions"
+        position="0 3 -0.7"
+        material="color: red"
+        scale="0.2 0.2 0.2"
+        change-color-on-grab
+      ></a-box>
+      <a-box
+        mixin="cube all-interactions"
+        position="-0.18 3 -0.7"
+        material="color: blue"
+        scale="0.2 0.2 0.2"
+        change-color-on-grab
+      ></a-box>
+      <a-box
+        mixin="cube all-interactions"
+        position="0.18 3 -0.7"
+        material="color: green"
+        scale="0.2 0.2 0.2"
+        change-color-on-grab
+      ></a-box>
+
+      <!-- Invisible ground to prevent falling -->
+      <a-box
+        static-body
+        width="100"
+        height="0.01"
+        depth="100"
+        visible="false"
+      ></a-box>
+    </a-scene>
+     <a href="index.html">
+    <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back to Menu" class="back-button" />
+  </a>
+  </body>
+</html>

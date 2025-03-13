@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo Nível 4</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.0/dist/aframe-physics-system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/wmurphyrd/aframe-super-hands/dist/aframe-super-hands.min.js"></script>
+  <link rel="stylesheet" href="jogo4.css" />
+  <script>
+
+    AFRAME.registerComponent("toggle-physics", {
+      events: {
+        pickup: function() {
+          this.el.addState('grabbed');
+        },
+        putdown: function(e) {
+          this.el.removeState('grabbed');
+          if (e.detail.frame && e.detail.inputSource) {
+            const referenceSpace = this.el.sceneEl.renderer.xr.getReferenceSpace();
+            const pose = e.detail.frame.getPose(e.detail.inputSource.gripSpace, referenceSpace);
+            if (pose && pose.angularVelocity) {
+              this.el.components['physx-body'].rigidBody.setAngularVelocity(pose.angularVelocity);
+            }
+            if (pose && pose.linearVelocity) {
+              this.el.components['physx-body'].rigidBody.setLinearVelocity(pose.linearVelocity);
+            }
+          }
+        }
+      }
+    });
+  </script>
+</head>
+<body>
+  <div class="instructions-screen" id="instructions-screen">
+    <p>Pegue a escova e passe a pasta de dente nela</p>
+    <img src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/voltar.png?v=1725927067794" alt="Back" id="back-button" />
+    <img src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/jogar.png?v=1725927065820" alt="Play Game" id="play-game-button" />
+  </div>
+  <a href="index.html"> 
+    <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back to Menu" class="back-button" />
+  </a>
+  <div id="game-instructions" class="game-instructions">
+  Instruções: Pegue a pasta de dente e a escova esticando seu braço para alcançá-los. 
+  Em seguida, faça o movimento de escovar os dentes para pontuar.
+</div>
+
+
+  <img src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/voltar.png?v=1725927067794" alt="Back to Start" id="back-to-start" />
+
+  <a-scene physics="debug: true">
+    <a-sky color="#ECECEC"></a-sky>
+
+    <!-- chão -->
+    <a-plane position="0 0 -5" rotation="-90 0 0" width="10" height="10" color="#7BC8A4" static-body></a-plane>
+
+    <!-- Banheiro gltf -->
+    <a-entity gltf-model="#banheiro" position="-295.36 0.16 107" scale="0.5 1 0.5"></a-entity>
+
+    <!-- Escova de Dente -->
+    <a-entity 
+      gltf-model="#escova"
+      position="0.2 1.07 -0.3" 
+      scale="0.009 0.009 0.009"
+      dynamic-body
+      class="collidable"
+      super-hands="colliderEvent: collisions; grabStartButtons: triggerdown; grabEndButtons: triggerup"
+      toggle-physics
+    ></a-entity>
+
+    <!-- Setas -->
+    <a-entity gltf-model="#seta" position="0.2 1.2 -0.33" scale="0.04 0.02 0.02" rotation="180 90 90"
+      animation__move="property: position; to: 0.2 1.33 -0.33; dur: 1000; dir: alternate; loop: true"></a-entity>
+
+    <a-entity gltf-model="#seta2" position="-0.2 1.2 -0.33" scale="0.04 0.02 0.02" rotation="180 90 90"
+      animation__move="property: position; to: -0.2 1.33 -0.33; dur: 1000; dir: alternate; loop: true"></a-entity>
+
+    <!-- Câmera com movimento -->
+    <a-entity position="0 1.6 0" camera look-controls wasd-controls>
+      <!-- Mãos -->
+      <a-entity position="0 0 0" id="right-hand" gltf-model="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/right.glb?v=1728271643303" scale="0.05 0.05 0.05" ></a-entity>
+      <a-entity position="0 0 0" id="left-hand" gltf-model="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/left.glb?v=1728271652093" scale="0.05 0.05 0.05"></a-entity>
+    </a-entity>
+
+    <!-- Pasta de Dente -->
+    <a-entity 
+      gltf-model="#pastadente"
+      position="-0.21 1.07 -0.31"
+      scale="0.7 0.7 1"
+      dynamic-body
+      class="collidable"
+      super-hands="colliderEvent: collisions; grabStartButtons: triggerdown; grabEndButtons: triggerup"
+      toggle-physics
+    ></a-entity>
+
+    <a-assets>
+      <a-asset-item id="banheiro" src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/banheiro.gltf?v=1725928233660"></a-asset-item>
+      <a-asset-item id="pastadente" src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/pasta_dental.glb?v=1731453078036"></a-asset-item>
+      <a-asset-item id="seta" src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/direction_arrow.gltf?v=1725928120364"></a-asset-item>
+      <a-asset-item id="seta2" src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/direction_arrow.gltf?v=1725928120364"></a-asset-item>
+      <a-asset-item id="escova" src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/escova.gltf?v=1725927667998"></a-asset-item>
+    </a-assets>
+  </a-scene>
+
+<script>
+  document.getElementById('play-game-button').addEventListener('click', function() {
+    window.location.href = 'nivel.html'; // Redireciona para a tela de níveis
+  });
+
+  document.getElementById('back-button').addEventListener('click', function() {
+    document.getElementById('instructions-screen').style.display = 'flex';
+  });
+
+  document.getElementById('back-to-start').addEventListener('click', function() {
+    document.getElementById('back-to-start').style.display = 'none';
+    document.getElementById('instructions-screen').style.display = 'flex';
+  });
+      window.onload = function() {
+      const instructions = document.getElementById('game-instructions');
+      instructions.style.display = 'block';
+      setTimeout(() => {
+        instructions.style.display = 'none';
+      }, 10000); // Oculta após 10 segundos
+    };
+</script>
+
+</body>
+</html>

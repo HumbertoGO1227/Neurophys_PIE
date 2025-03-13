@@ -1,0 +1,180 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.menu-screen, .login-screen, .level-screen, .instructions-screen, .options-screen, .score-screen {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background-image: url('https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/6383571.jpg?v=1731469312586');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+.menu-screen.active, .login-screen.active, .level-screen.active, .instructions-screen.active, .options-screen.active, .score-screen.active {
+  display: block;
+}
+
+.menu-screen img, .login-screen img, .level-screen img, .score-screen img {
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+  margin: 20px auto;
+  display: block;
+}
+
+.score-screen {
+  display: none;
+  text-align: center;
+  color: #ffffff;
+  padding-top: 30px;
+}
+
+.score-screen input {
+  padding: 14px;
+  margin-bottom: 15px;
+  border: 2px solid #4a8fd0;
+  border-radius: 8px;
+  background-color: #dce6f5; /* Azul claro */
+  color: #333333;
+  width: 300px;  /* Aumentei a largura do campo de entrada */
+  font-size: 18px; /* Aumentei o tamanho da fonte */
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.score-screen input:focus {
+  border-color: #3a7bb0;
+  background-color: #eaf2fb; /* Azul ainda mais claro no foco */
+}
+
+.score-screen p {
+  color: #f0f8ff; /* Azul muito claro */
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+#score-result {
+  margin-top: 10px;
+  color: #ffffff; /* Cor branca */
+  font-size: 22px;
+  font-weight: bold;
+}
+
+/* Definindo o estilo dos botões */
+.button, .level-button, .btn-3 {
+  background-color: #4a8fd0;
+  color: #ffffff;
+  padding: 10px 40px;  /* Aumentei o padding para tornar o botão maior */
+  margin: 15px auto;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 18px;  /* Aumentei o tamanho da fonte */
+  position: relative;
+  width: 250px;  /* Definindo uma largura fixa para os botões */
+  display: block;
+  transition: all 0.3s ease;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  border: 4px solid transparent;
+  overflow: hidden; /* Importante para que o efeito não ultrapasse os limites do botão */
+}
+
+.button:hover, .level-button:hover, .btn-3:hover {
+  background-color: #F8F8FF;
+  color: #7B68EE;
+  box-shadow: 0px 6px 12px rgba(0, 0, 0, 0.3);
+  transform: scale(1.05);
+}
+
+.button::before, .level-button::before, .btn-3::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 8px;
+  z-index: -1; /* Garante que fique atrás do conteúdo do botão */
+  transition: all 0.3s ease;
+}
+
+.btn-3 {
+  background-color: #F8F8FF;
+  color: #7B68EE;
+  padding: 10px 4px; /* Padding aumentado */
+  font-family: Arial, sans-serif;
+  font-size: 20px; /* Aumentei o tamanho da fonte */
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.btn-3:hover {
+  background-color: #3a7bb0;
+  color: #f0f8ff;
+}
+
+#back-button-login, #back-button-level, #back-button-instructions, #back-button-options, #back-button-score {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 40px;
+  cursor: pointer;
+}
+
+.cpf-login-screen, .register-screen {
+  display: none;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  text-align: center;
+  background-image: url('https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/6383571.jpg?v=1731469312586');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff;
+}
+
+.cpf-login-screen img, .register-screen img {
+  width: 200px;
+  height: auto;
+  margin: 20px auto;
+  display: block;
+}
+
+.cpf-login-screen p, .register-screen p {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.cpf-login-screen input, .register-screen input {
+  padding: 14px;
+  margin-bottom: 15px;
+  border: 2px solid #4a8fd0;
+  border-radius: 8px;
+  background-color: #dce6f5;
+  color: #333333;
+  width: 300px;
+  font-size: 18px;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.cpf-login-screen input:focus, .register-screen input:focus {
+  border-color: #3a7bb0;
+  background-color: #eaf2fb;
+}
+

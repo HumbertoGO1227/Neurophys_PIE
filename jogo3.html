@@ -1,65 +1,76 @@
 <html>
   <head>
-    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
-    <link rel="stylesheet" href="jogo4.css" />
+    <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nível 3</title>
+  <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/n5ro/aframe-physics-system@v4.0.0/dist/aframe-physics-system.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/wmurphyrd/aframe-super-hands/dist/aframe-super-hands.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/handy-work/build/handy-controls.min.js"></script>
+  <link rel="stylesheet" href="jogo3.css" />
   </head>
   <body>
-     <a href="index.html"> <!-- Coloque o nome do arquivo do menu aqui -->
-    <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back to Menu" class="back-button" />
-  </a>
-    
-    <a-scene>
-      <a-sky color="#ECECEC"></a-sky>
+    <div class="instructions-screen" id="instructions-screen">
+    <p>Vamos fazer uma salada de fruta</p>
+    <img src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/voltar.png?v=1725927067794" alt="Back" id="back-button" />
+    <img src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/jogar.png?v=1725927065820" alt="Play Game" id="play-game-button" />
+    </div>
+      <a href="index.html"> 
+        <img src="https://cdn.glitch.global/1b46c2ca-4ac2-4441-8aec-e0bb0bff3eb3/voltar-seta.png?v=1728042679818" alt="Back to Menu" class="back-button" />
+      </a>
+    <div id="game-instructions" class="game-instructions">
+      Instruções: Pegue os ingredientes e traga até o centro para pontuar.
+    </div>
+      <img src="https://cdn.glitch.global/39f6b9bd-f240-4401-9d15-42cfb2be02b7/voltar.png?v=1725927067794" alt="Back to Start" id="back-to-start" />
+      
+    <a-scene physics="debug: true">
+    <a-sky color="#ECECEC"></a-sky>
+      
+      
+      <!-- LINK OBJETOS-->
       <a-assets>
+        <!-- LINK OBJETOS PEGÁVEIS-->
         <a-asset-item id="maca" src="https://cdn.glitch.global/8bb67894-4461-4695-a24c-05ff746fc8db/apple.glb?v=1725908256543"></a-asset-item>
         <a-asset-item id="manga" src="https://cdn.glitch.global/8bb67894-4461-4695-a24c-05ff746fc8db/mango_low.glb?v=1725908569457"></a-asset-item>
-        <a-asset-item id="uva" src="https://cdn.glitch.global/8bb67894-4461-4695-a24c-05ff746fc8db/grapes.glb?v=1725899396920"></a-asset-item>
-        <a-asset-item id="banana" src="https://cdn.glitch.global/8bb67894-4461-4695-a24c-05ff746fc8db/banana.glb?v=1727737070505"></a-asset-item>
-        <a-asset-item id="laranja" src="https://cdn.glitch.global/8bb67894-4461-4695-a24c-05ff746fc8db/cara_cara_orange.glb?v=1727738794002"></a-asset-item>
         <a-asset-item id="morango" src="https://cdn.glitch.global/8bb67894-4461-4695-a24c-05ff746fc8db/strawberry.glb?v=1727737421573"></a-asset-item>
-        <a-asset-item id="goiaba" src="https://cdn.glitch.global/8bb67894-4461-4695-a24c-05ff746fc8db/psidium_guajava.glb?v=1727738995149"></a-asset-item>
-        <a-asset-item id="mamao" src="https://cdn.glitch.me/8bb67894-4461-4695-a24c-05ff746fc8db/papaya.glb?v=1727739514148"></a-asset-item>
-        <a-asset-item id="kiwi" src="https://cdn.glitch.global/8bb67894-4461-4695-a24c-05ff746fc8db/kiwi_slice_3d_fruit_scan.glb?v=1727737379425"></a-asset-item>
         
-        <a-asset-item id="cozinha" src="https://cdn.glitch.me/8bb67894-4461-4695-a24c-05ff746fc8db/kitchen_2101-23_colours.glb?v=1725901451797"></a-asset-item>
-        <a-asset-item id="mesa" src="https://cdn.glitch.global/8bb67894-4461-4695-a24c-05ff746fc8db/industrial_table.glb?v=1725904715466"></a-asset-item>
-        
-        
-        
+        <!-- LINK CENÁRIO-->
+        <a-asset-item id="cozinha" src="https://cdn.glitch.me/8bb67894-4461-4695-a24c-05ff746fc8db/cozinha.glb?v=1741273273215"></a-asset-item>
       </a-assets>
       
-     <!-- <a-gltf-model src="#sabonete" position="0 0.5 -10" rotation="45 0 0" scale="20 20 20" color="blue"></a-gltf-model> -->
-     <!-- <a-gltf-model src="#sabao" position="0 0.5 -10" rotation="45 0 0" scale="50 50 50"></a-gltf-model> -->
-    
-      <a-gltf-model src="#uva" position="-0.25 1 -1.05" rotation="45 0 0" scale="-0.01 -0.01 -0.01"></a-gltf-model>
-      <a-gltf-model src="#maca" position="0.25 1 -0.85" rotation="45  0" scale="-0.01 -0.01 -0.01"></a-gltf-model>
-      <a-gltf-model src="#manga" position="0.75 1 -1.05" rotation="45  0" scale="-0.04 -0.04 -0.04"></a-gltf-model>
+          <!-- OBJETOS PEGÁVAEIS-->
+          <a-gltf-model src="#morango" position="3.5 2 -5" rotation="180 0 0" scale="-0.5 -0.5 -0.5"></a-gltf-model>
+          <a-gltf-model src="#maca" position="4.5 2.1 -5" rotation="180 0 0" scale="-0.015 -0.015 -0.015"></a-gltf-model>
+          <a-gltf-model src="#manga" position="5.5 2.1 -5" rotation="45  0" scale="-0.07 -0.07 -0.07"></a-gltf-model>
+          <!-- CENÁRIO COZINHA -->
+          <a-gltf-model src="#cozinha" position="5.5 0 -5" rotation="0 -90 0" scale="-1 1 1"></a-gltf-model>
       
       
       
-      
-      <a-gltf-model src="#cozinha" position="3 0 -5" rotation="-2 0 0" scale="-1 1 1"></a-gltf-model>
-      <a-gltf-model src="#mesa" position="0.3 0 -1.05" rotation="5 0 0" scale="1.4 1.4 1.4"></a-gltf-model>
-      
-      <!--<a-box position="-1 0.5 -3" rotation="0 45 0" color="#4CC3D9"></a-box>  
-      <a-sphere position="0 1.25 -5" radius="1.25" color="#EF2D5E"></a-sphere>
-      <a-cylinder position="1 0.75 -3" radius="0.5" height="1.5" color="#FFC65D"></a-cylinder>  -->
-      <a-plane position="0 0 -5" rotation="-90 0 0" width="4" height="4" color="#7BC8A4"></a-plane>
-      <a-camera position="0.4 1.9 0"></a-camera>
-        <div id="game-instructions" class="game-instructions">
-  Instruções: Pegue a pasta de dente e a escova esticando seu braço para alcançá-los. 
-  Em seguida, faça o movimento de escovar os dentes para pontuar.
-</div>
-      
-      <script>
-      window.onload = function() {
-      const instructions = document.getElementById('game-instructions');
-      instructions.style.display = 'block';
-      setTimeout(() => {
-        instructions.style.display = 'none';
-      }, 10000); // Oculta após 10 segundos
-    };
-</script>
+          <a-camera position="4.5 3 -2.5" rotation="0 0 0"></a-camera>
     </a-scene>
+    
+          <script>
+              document.getElementById('play-game-button').addEventListener('click', function() {
+                window.location.href = 'nivel.html'; // Redireciona para a tela de níveis
+              });
+
+              document.getElementById('back-button').addEventListener('click', function() {
+                document.getElementById('instructions-screen').style.display = 'flex';
+              });
+
+              document.getElementById('back-to-start').addEventListener('click', function() {
+                document.getElementById('back-to-start').style.display = 'none';
+                document.getElementById('instructions-screen').style.display = 'flex';
+              });
+                  window.onload = function() {
+                  const instructions = document.getElementById('game-instructions');
+                  instructions.style.display = 'block';
+                  setTimeout(() => {
+                    instructions.style.display = 'none';
+                  }, 10000); // Oculta após 10 segundos
+                };
+      </script>
   </body>
-</html>
+</html> 
